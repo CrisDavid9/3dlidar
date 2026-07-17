@@ -9,14 +9,13 @@ from launch_ros.actions import Node
 
 import xacro
 
-
 def generate_launch_description():
 
     # Check if we're told to use sim time
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     # Process the URDF file
-    pkg_path = os.path.join(get_package_share_directory('my_bot'))
+    pkg_path = os.path.join(get_package_share_directory('3dlidar'))
     xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
     robot_description_config = xacro.process_file(xacro_file).toxml()
     

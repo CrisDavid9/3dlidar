@@ -1,0 +1,15 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 10
+
+    shaft_cont:
+      type: stepper_controller/StepBounceController # position_controllers/JointGroupPositionController 
+
+    joint_broad:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+shaft_cont:
+  ros__parameters:
+
+    joints:
+      - shaft_joint

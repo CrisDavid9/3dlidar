@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(my_bot)
+project(3dlidar)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -35,6 +35,12 @@ endif()
 install(
   DIRECTORY config description launch worlds
   DESTINATION share/${PROJECT_NAME}
+)
+
+install(PROGRAMS
+  scripts/stepper_sim_node.py
+  scripts/processing_node.py
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 ament_package()

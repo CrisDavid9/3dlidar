@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <xacro:if value="$(arg sim_mode)">
+        <ros2_control name="GazeboSystem" type="system">
+            <hardware>
+                <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+            </hardware>
+            <joint name="shaft_joint">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+        </ros2_control>
+    </xacro:if>
+
+    <xacro:unless value="$(arg sim_mode)">
+        <ros2_control name="RealRobot" type="system">  
+            <hardware>
+                <plugin>stepper_driver/StepperHardware</plugin>
+                <param name="shaft_name">shaft_joint</param>
+                <param name="device">/dev/serial/by-path/pci-0000:2a:00.1-usb-0:6:1.0</param>
+            </hardware>
+            <joint name="shaft_joint">
+                <command_interface name="direction"/>
+                <state_interface name="steps"/>
+                <state_interface name="position"/>
+            </joint>
+        </ros2_control>
+    </xacro:unless>
+
+    <gazebo>
+        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+            <parameters>$(find 3dlidar)/config/my_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+</robot>
